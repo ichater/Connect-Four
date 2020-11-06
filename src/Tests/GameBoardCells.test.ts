@@ -1,4 +1,4 @@
-import { GameBoard } from "../GameRules/GameBoard";
+import { GameBoard, GameCell } from "../GameRules/GameBoard";
 import { gameBoardCells } from "../GameRules/GameBoardCells";
 
 describe("Correct number of cells returned depending on starting game board x and y values", () => {
@@ -12,11 +12,11 @@ describe("Correct number of cells returned depending on starting game board x an
   });
   it("returns appropriate array of objects", () => {
     let testBoard: GameBoard = { x: 2, y: 2 };
-    const result: Array<object> = [
-      { x: 1, y: 1 },
-      { x: 1, y: 2 },
-      { x: 2, y: 1 },
-      { x: 2, y: 2 },
+    const result: Array<GameCell> = [
+      { x: 1, y: 1, token: null },
+      { x: 1, y: 2, token: null },
+      { x: 2, y: 1, token: null },
+      { x: 2, y: 2, token: null },
     ];
     expect(gameBoardCells(testBoard)).toEqual(result);
   });

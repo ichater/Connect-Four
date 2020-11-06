@@ -3,14 +3,15 @@ interface GameBoard {
   y: number;
 }
 
-enum PlaceChip {
-  one = "one",
-  two = "two",
-  three = "three",
-  four = "four",
-  five = "five",
-  six = "six",
-  seven = "seven",
+interface GameCell {
+  x: number;
+  y: number;
+  token: Token | null;
 }
 
-export { GameBoard };
+enum Token {
+  Yellow = "Yellow",
+  Red = "Red",
+}
+
+export { GameBoard, GameCell };

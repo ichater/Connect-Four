@@ -1,13 +1,13 @@
-import { GameBoard } from "./GameBoard";
+import { GameBoard, GameCell } from "./GameBoard";
 
-const gameBoardCells = (board: GameBoard): Array<object> => {
+const gameBoardCells = (board: GameBoard): Array<GameCell> => {
   const x = numberToArray(board.x);
   const y = numberToArray(board.y);
 
   return x
     .map((x) =>
       y.map((y) => {
-        return { x: x, y: y };
+        return { x: x, y: y, token: null };
       })
     )
     .reduce((acc, cur) => acc.concat(cur));
