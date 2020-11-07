@@ -14,4 +14,4 @@ enum Token {
   Red = "Red",
 }
 
-export { GameBoard, GameCell };
+export { GameBoard, GameCell, Token };

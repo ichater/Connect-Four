@@ -1,6 +1,6 @@
 import { GameBoard, GameCell } from "./GameBoard";
 
-const gameBoardCells = (board: GameBoard): Array<GameCell> => {
+const gameBoardCells = (board: GameBoard): GameCell[] => {
   const x = numberToArray(board.x);
   const y = numberToArray(board.y);
 
