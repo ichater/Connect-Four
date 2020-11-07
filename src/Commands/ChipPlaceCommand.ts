@@ -1,4 +1,4 @@
-import { GameBoard, GameCell } from "../GameRules/GameBoard";
+import { GameBoard, GameCell, Token } from "../GameRules/GameBoard";
 import {
   chipFallLength,
   isValidChipPlacment,
@@ -9,9 +9,22 @@ const chipPlaceCommand = (
   gameCells: GameCell[],
   command: number
 ): GameCell[] => {
-  return isValidChipPlacment(board, command)
-    ? chipFallLength(gameCells, command)
-    : gameCells;
+  if (isValidChipPlacment(board, command)) {
+    let chipFall = chipFallLength(gameCells, command);
+
+    if (chipFall) {
+      gameCells.splice(gameCells.indexOf(chipFall), 1, {
+        x: chipFall.x,
+        y: chipFall.y,
+        token: Token.Yellow,
+      });
+      return gameCells;
+    } else {
+      return gameCells;
+    }
+  } else {
+    return gameCells;
+  }
 };
 
 export { chipPlaceCommand };
