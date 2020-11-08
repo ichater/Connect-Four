@@ -3,7 +3,7 @@ import { GameBoard, GameCell, Token } from "../GameRules/GameBoard";
 const isValidChipPlacment = (board: GameBoard, command: number): boolean =>
   command > 0 && command <= board.x;
 
-const chipFallLength = (
+const cellToPlaceToken = (
   gameCells: GameCell[],
   command: number
 ): GameCell | undefined => {
@@ -11,12 +11,12 @@ const chipFallLength = (
     .filter((cell) => cell.x === command && cell.token === null)
     .map((cell) => cell.y);
 
-  const cellToPlaceToken = cellToToken(gameCells, yCellColumn, command);
+  const cellToPlaceToken = cellToTokenDepth(gameCells, yCellColumn, command);
 
   return cellToPlaceToken;
 };
 
-const cellToToken = (
+const cellToTokenDepth = (
   gameCells: GameCell[],
   yCellColumn: number[],
   command: number
@@ -25,4 +25,4 @@ const cellToToken = (
     (cell) => cell.y === Math.min(...yCellColumn) && cell.x === command
   );
 
-export { isValidChipPlacment, chipFallLength };
+export { isValidChipPlacment, cellToPlaceToken };

@@ -1,4 +1,3 @@
-import { TokenClass } from "typescript";
 import { chipPlaceCommand } from "../Commands/ChipPlaceCommand";
 import { GameBoard, GameCell, Token } from "../GameRules/GameBoard";
 import { gameBoardCells } from "../GameRules/GameBoardCells";
@@ -12,7 +11,12 @@ describe("Correct chip placement depending on board", () => {
       { x: 2, y: 1, token: Token.Yellow },
       { x: 2, y: 2, token: null },
     ];
-    const answer = chipPlaceCommand(testBoard, gameBoardCells(testBoard), 2);
+    const answer = chipPlaceCommand(
+      testBoard,
+      gameBoardCells(testBoard),
+      2,
+      Token.Yellow
+    );
 
     expect(result).toEqual(answer);
   });
@@ -24,9 +28,14 @@ describe("Correct chip placement depending on board", () => {
       { x: 2, y: 1, token: null },
       { x: 2, y: 2, token: null },
     ];
-    const answer = chipPlaceCommand(testBoard, gameBoardCells(testBoard), 1);
+    const answer = chipPlaceCommand(
+      testBoard,
+      gameBoardCells(testBoard),
+      1,
+      Token.Yellow
+    );
     console.log(answer);
-    expect(answer).toEqual(result);
+    expect(result).toEqual(answer);
   });
   it("Yellow Token falls on top of 2nd yellow token", () => {
     const testBoard: GameBoard = { x: 2, y: 2 };
@@ -42,7 +51,24 @@ describe("Correct chip placement depending on board", () => {
       { x: 2, y: 1, token: null },
       { x: 2, y: 2, token: null },
     ];
-    const answer = chipPlaceCommand(testBoard, testBoardTokens, 1);
+    const answer = chipPlaceCommand(
+      testBoard,
+      testBoardTokens,
+      1,
+      Token.Yellow
+    );
     expect(answer).toEqual(result);
+  });
+  it("Invalid command does not change state of board", () => {
+    const testBoard: GameBoard = { x: 2, y: 2 };
+
+    const answer = chipPlaceCommand(
+      testBoard,
+      gameBoardCells(testBoard),
+      5,
+      Token.Yellow
+    );
+
+    expect(answer).toEqual(gameBoardCells(testBoard));
   });
 });
