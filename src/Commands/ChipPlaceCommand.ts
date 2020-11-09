@@ -1,31 +1,30 @@
-import { GameBoard, GameCell, Token } from "../GameRules/GameBoard";
-import {
-  cellToPlaceToken,
-  isValidChipPlacment,
-} from "./ChipPlaceHelperFunctions";
+import { GameCell, Token } from "../GameRules/GameBoard";
+import { chipFallLength, validChipPlacement } from "./ChipPlaceHelperFunctions";
 
 const chipPlaceCommand = (
-  board: GameBoard,
-  gameCells: GameCell[],
-  command: number,
+  board: GameCell[][],
+  chipPlaceLocation: number,
   token: Token
-): GameCell[] => {
-  if (isValidChipPlacment(board, command)) {
-    let chipFall = cellToPlaceToken(gameCells, command);
+): GameCell[][] => {
+  const roomInColumn = () => {
+    if (chipFallLength(board, chipPlaceLocation)) {
+      board[chipFallLength(board, chipPlaceLocation - 1)].splice(
+        chipPlaceLocation - 1,
+        1,
+        {
+          token: token,
+        }
+      );
 
-    if (chipFall) {
-      gameCells.splice(gameCells.indexOf(chipFall), 1, {
-        x: chipFall.x,
-        y: chipFall.y,
-        token: token === Token.Yellow ? Token.Yellow : Token.Red,
-      });
-      return gameCells;
+      return board;
     } else {
-      return gameCells;
+      return board;
     }
-  } else {
-    return gameCells;
-  }
+  };
+
+  return validChipPlacement(board[0], chipPlaceLocation)
+    ? roomInColumn()
+    : board;
 };
 
 export { chipPlaceCommand };

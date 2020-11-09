@@ -4,8 +4,6 @@ interface GameBoard {
 }
 
 interface GameCell {
-  x: number;
-  y: number;
   token: Token | null;
 }
 

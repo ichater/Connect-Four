@@ -1,28 +1,15 @@
-import { GameBoard, GameCell, Token } from "../GameRules/GameBoard";
+import { GameCell } from "../GameRules/GameBoard";
+import { gameBoardCells } from "../GameRules/GameBoardCells";
 
-const isValidChipPlacment = (board: GameBoard, command: number): boolean =>
-  command > 0 && command <= board.x;
+const validChipPlacement = (board: GameCell[], chipPlace: number): boolean =>
+  chipPlace > 0 && chipPlace < board.length + 1;
 
-const cellToPlaceToken = (
-  gameCells: GameCell[],
-  command: number
-): GameCell | undefined => {
-  const yCellColumn = gameCells
-    .filter((cell) => cell.x === command && cell.token === null)
-    .map((cell) => cell.y);
-
-  const cellToPlaceToken = cellToTokenDepth(gameCells, yCellColumn, command);
-
-  return cellToPlaceToken;
+const chipFallLength = (board: GameCell[][], chipPlace: number): number => {
+  return board
+    .map((row) => row[chipPlace])
+    .filter((cell) => cell.token === null).length;
 };
 
-const cellToTokenDepth = (
-  gameCells: GameCell[],
-  yCellColumn: number[],
-  command: number
-): GameCell | undefined =>
-  gameCells.find(
-    (cell) => cell.y === Math.min(...yCellColumn) && cell.x === command
-  );
+console.log(chipFallLength(gameBoardCells({ x: 7, y: 6 }), 5));
 
-export { isValidChipPlacment, cellToPlaceToken };
+export { validChipPlacement, chipFallLength };
