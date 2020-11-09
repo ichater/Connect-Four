@@ -8,7 +8,7 @@ const chipPlaceCommand = (
 ): GameCell[][] => {
   const roomInColumn = () => {
     if (chipFallLength(board, chipPlaceLocation)) {
-      board[chipFallLength(board, chipPlaceLocation - 1)].splice(
+      board[chipFallLength(board, chipPlaceLocation)].splice(
         chipPlaceLocation - 1,
         1,
         {
