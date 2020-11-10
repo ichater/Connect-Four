@@ -1,13 +1,12 @@
 import { GameCell, Token } from "../GameRules/GameBoard";
-import { gameBoardCells } from "../GameRules/GameBoardCells";
 
 const validChipPlacement = (board: GameCell[], chipPlace: number): boolean =>
   chipPlace > 0 &&
-  chipPlace < board.length + 1 &&
+  chipPlace <= board.length &&
   board[chipPlace - 1].token === null;
 
 const chipFallLength = (board: GameCell[][], chipPlace: number): number =>
-  board.map((row) => row[chipPlace - 1]).filter((cell) => cell.token === null)
+  board.map((col) => col[chipPlace - 1]).filter((cell) => cell.token === null)
     .length;
 
 const chipPlaceSuccess = (

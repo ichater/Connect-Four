@@ -1,7 +1,6 @@
 import { GameCell } from "./GameBoard";
 
-const isFourConnected = (gameCells: Array<GameCell>): boolean => {
-  gameCells.filter((gameCell) => gameCell.token);
+const isFourConnected = (gameCells: GameCell[][]): boolean => {
   return true;
 };
 

@@ -16,4 +16,25 @@ describe("Chip placed in correct depth and position", () => {
     const result = chipPlaceCommand(board, 1, Token.Yellow);
     expect(result).toEqual([[{ token: Token.Yellow }], [{ token: Token.Red }]]);
   });
+  it("board unchanged if token attempted to be placed in full column", () => {
+    const board: GameCell[][] = [
+      [{ token: Token.Yellow }],
+      [{ token: Token.Red }],
+    ];
+    const result = chipPlaceCommand(board, 1, Token.Yellow);
+    expect(result).toEqual(board);
+  });
+  it("Token falls to bottom", () => {
+    const board: GameCell[][] = [
+      [{ token: null }],
+      [{ token: null }],
+      [{ token: null }],
+    ];
+    const result = chipPlaceCommand(board, 1, Token.Yellow);
+    expect(result).toEqual([
+      [{ token: null }],
+      [{ token: null }],
+      [{ token: Token.Yellow }],
+    ]);
+  });
 });
