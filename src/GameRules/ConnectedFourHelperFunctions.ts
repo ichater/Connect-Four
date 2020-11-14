@@ -1,11 +1,17 @@
 import { GameCell, Token } from "./GameBoard";
 
+// Would be nice to convert this into a true boolean function
 const iterateThroughAllCells = (gameCells: GameCell[][]) => {
-  for (var i = 1; i < gameCells.length; i++) {
-    for (var j = 1; j < gameCells[i].length; j++) {
-      const result = gameCells[i][j].token;
+  for (var row = 0; row < gameCells.length; row++) {
+    for (var col = 0; col < gameCells[row].length; col++) {
+      const result = gameCells[row][col].token;
       if (result !== null) {
-        if (isConnectedHorizontal(gameCells[i], j)) {
+        if (
+          isConnectedHorizontal(gameCells[row], col) ||
+          isConnectedVerticle(gameCells, row, col) ||
+          isConnectedDiagonalDown(gameCells, row, col) ||
+          isConnectedDiagonalUp(gameCells, row, col)
+        ) {
           return true;
         } else {
           continue;
@@ -17,29 +23,62 @@ const iterateThroughAllCells = (gameCells: GameCell[][]) => {
   }
 };
 
-const isConnectedHorizontal = (gameCells: GameCell[], j: number): boolean => {
-  const result = gameCells.slice(j, j + 4);
-  return (
-    result.every((x) => x.token === Token.Red) ||
-    result.every((x) => x.token === Token.Yellow)
-  );
+const isConnectedHorizontal = (gameCells: GameCell[], col: number): boolean => {
+  const result = gameCells.slice(col, col + 4);
+  return result.some((x) => x === undefined) ? false : isConnected(result);
 };
 
 const isConnectedVerticle = (
   gameCells: GameCell[][],
-  i: number,
-  j: number
+  row: number,
+  col: number
 ): boolean => {
   const result = [
-    gameCells[i][j],
-    gameCells[i + 1][j],
-    gameCells[i + 2][j],
-    gameCells[i + 3][j],
+    gameCells[row][col],
+    gameCells?.[row + 1]?.[col],
+    gameCells?.[row + 2]?.[col],
+    gameCells?.[row + 3]?.[col],
   ];
-  return (
-    result.every((x) => x.token === Token.Red) ||
-    result.every((x) => x.token === Token.Yellow)
-  );
+
+  return result.some((x) => x === undefined) ? false : isConnected(result);
 };
 
-export { iterateThroughAllCells, isConnectedHorizontal, isConnectedVerticle };
+const isConnectedDiagonalDown = (
+  gameCells: GameCell[][],
+  row: number,
+  col: number
+): boolean => {
+  const result = [
+    gameCells[row][col],
+    gameCells?.[row + 1]?.[col + 1],
+    gameCells?.[row + 2]?.[col + 2],
+    gameCells?.[row + 3]?.[col + 3],
+  ];
+  return result.some((x) => x === undefined) ? false : isConnected(result);
+};
+
+const isConnectedDiagonalUp = (
+  gameCells: GameCell[][],
+  row: number,
+  col: number
+): boolean => {
+  const result = [
+    gameCells[row][col],
+    gameCells?.[row - 1]?.[col + 1],
+    gameCells?.[row - 2]?.[col + 2],
+    gameCells?.[row - 3]?.[col + 3],
+  ];
+  return result.some((x) => x === undefined) ? false : isConnected(result);
+};
+
+const isConnected = (result: GameCell[]): boolean =>
+  result.every((x) => x.token === Token.Red) ||
+  result.every((x) => x.token === Token.Yellow);
+
+export {
+  iterateThroughAllCells,
+  isConnectedHorizontal,
+  isConnectedVerticle,
+  isConnectedDiagonalDown,
+  isConnectedDiagonalUp,
+};

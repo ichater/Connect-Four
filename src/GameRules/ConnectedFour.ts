@@ -1,7 +1,4 @@
-import {
-  isConnectedHorizontal,
-  iterateThroughAllCells,
-} from "./ConnectedFourHelperFunctions";
+import { iterateThroughAllCells } from "./ConnectedFourHelperFunctions";
 import { GameCell } from "./GameBoard";
 
 const isFourConnected = (gameCells: GameCell[][]): boolean => {
