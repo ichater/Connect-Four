@@ -25,7 +25,7 @@ const iterateThroughAllCells = (gameCells: GameCell[][]) => {
 
 const isConnectedHorizontal = (gameCells: GameCell[], col: number): boolean => {
   const result = gameCells.slice(col, col + 4);
-  return result.some((x) => x === undefined) ? false : isConnected(result);
+  return isFourCells(result) ? checkIfFourConnected(result) : false;
 };
 
 const isConnectedVerticle = (
@@ -40,7 +40,7 @@ const isConnectedVerticle = (
     gameCells?.[row + 3]?.[col],
   ];
 
-  return result.some((x) => x === undefined) ? false : isConnected(result);
+  return isFourCells(result) ? checkIfFourConnected(result) : false;
 };
 
 const isConnectedDiagonalDown = (
@@ -54,7 +54,7 @@ const isConnectedDiagonalDown = (
     gameCells?.[row + 2]?.[col + 2],
     gameCells?.[row + 3]?.[col + 3],
   ];
-  return result.some((x) => x === undefined) ? false : isConnected(result);
+  return isFourCells(result) ? checkIfFourConnected(result) : false;
 };
 
 const isConnectedDiagonalUp = (
@@ -68,10 +68,13 @@ const isConnectedDiagonalUp = (
     gameCells?.[row - 2]?.[col + 2],
     gameCells?.[row - 3]?.[col + 3],
   ];
-  return result.some((x) => x === undefined) ? false : isConnected(result);
+  return isFourCells(result) ? checkIfFourConnected(result) : false;
 };
 
-const isConnected = (result: GameCell[]): boolean =>
+const isFourCells = (table: GameCell[]): boolean =>
+  table.every((x) => x !== undefined);
+
+const checkIfFourConnected = (result: GameCell[]): boolean =>
   result.every((x) => x.token === Token.Red) ||
   result.every((x) => x.token === Token.Yellow);
 
@@ -81,4 +84,5 @@ export {
   isConnectedVerticle,
   isConnectedDiagonalDown,
   isConnectedDiagonalUp,
+  checkIfFourConnected,
 };

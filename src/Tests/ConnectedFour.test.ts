@@ -39,7 +39,7 @@ describe("checks if four tokens are connected horizontally, vertically or diagon
       [{ token: null }],
       [{ token: null }],
     ];
-    expect(isFourConnected(board)).toEqual(false);
+    expect(isFourConnected(board)).toBe(false);
   });
   it("returns true when four are connected diagonally", () => {
     const board: GameCell[][] = [

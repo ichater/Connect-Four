@@ -44,7 +44,7 @@ describe("testing the isConnectedVerticle helper function", () => {
       [{ token: null }],
       [{ token: Token.Yellow }],
     ];
-    expect(isConnectedVerticle(arr, 0, 0)).toBeFalsy();
+    expect(isConnectedVerticle(arr, 0, 0)).toEqual(false);
   });
 });
 
